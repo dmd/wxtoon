@@ -4,6 +4,8 @@ import os
 import json
 import urllib.request
 from datetime import datetime
+from openai import OpenAI
+import base64
 
 
 OWM_API = open("owm-api-key").read().strip()
@@ -66,17 +68,51 @@ if "__ANIMAL__" in activity:
 
 prompt = f"""A minimalistic black-and-white cartoon of a cute {animal}, drawn in thick lines, centered in a square 400x400 scene. The {animal} is {activity}, matching the current weather which is {weather_description} and the current season which is {season}. The drawing is simple and bold, with no background details other than essential props. Avoid shading or fine details. Ideal for a monochrome e-ink display. The {animal} is cheerful and expressive."""
 
-# response = client.responses.create(
-#         model="gpt-4.1-mini",
-#         input=prompt,
-#         tools=[
-#             {
-#                 "type": "image_generation",
-#                 "size": "1024x1024",
-#                 "background": "transparent",
-#                 "quality": "high",
-#             }
-#         ],
-#     )
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+try:
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        input=prompt,
+        tools=[
+            {
+                "type": "image_generation",
+                "size": "1024x1024",
+                "background": "transparent",
+                "quality": "high",
+            }
+        ],
+    )
+
+    image_data = [
+        output.result
+        for output in response.output
+        if output.type == "image_generation_call"
+    ]
+
+    if image_data:
+        image_base64 = image_data[0]
+
+        # new: generate timestamped filename
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        filename = f"{timestamp}.png"
+
+        # write the new image file
+        with open(filename, "wb") as f:
+            f.write(base64.b64decode(image_base64))
+
+        # update the symlink current.png -> timestamped file
+        try:
+            if os.path.islink("current.png") or os.path.exists("current.png"):
+                os.remove("current.png")
+            os.symlink(filename, "current.png")
+        except OSError as link_err:
+            print(f"Warning: could not update symlink: {link_err}")
+
+
+except Exception as e:
+    print(f"Error generating image: {e}")
+    image_url = None
 
 print(prompt)
+print(f"Wrote {filename}.")
