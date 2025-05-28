@@ -1,0 +1,4 @@
+#!/bin/bash
+
+OPENAI_API_KEY=$(cat ~/.openai-api-key)
+~/wxtoon/.venv/bin/python prompt.py
