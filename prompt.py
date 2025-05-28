@@ -6,6 +6,8 @@ import urllib.request
 from datetime import datetime
 from openai import OpenAI
 import base64
+from PIL import Image
+import io
 
 
 OWM_API = open("owm-api-key").read().strip()
@@ -24,6 +26,41 @@ def get_season():
         return "summer"
     else:
         return "fall"
+
+
+def resize_image_with_border(image_data, target_width=400, target_height=480):
+    """Resize a 1024x1024 image to target dimensions with transparent border."""
+    # Decode base64 image
+    img = Image.open(io.BytesIO(base64.b64decode(image_data)))
+
+    # Calculate scaling to fit within target dimensions while maintaining aspect ratio
+    scale_factor = min(target_width / img.width, target_height / img.height)
+
+    # Calculate new dimensions
+    new_width = int(img.width * scale_factor)
+    new_height = int(img.height * scale_factor)
+
+    # Resize the image
+    resized_img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+    # Create new image with target dimensions and transparent background
+    final_img = Image.new("RGBA", (target_width, target_height), (0, 0, 0, 0))
+
+    # Calculate position to center the resized image
+    x_offset = (target_width - new_width) // 2
+    y_offset = (target_height - new_height) // 2
+
+    # Paste the resized image onto the transparent background
+    final_img.paste(
+        resized_img,
+        (x_offset, y_offset),
+        resized_img if resized_img.mode == "RGBA" else None,
+    )
+
+    # Convert back to base64
+    buffer = io.BytesIO()
+    final_img.save(buffer, format="PNG")
+    return base64.b64encode(buffer.getvalue()).decode()
 
 
 def pick_animal():
@@ -93,13 +130,16 @@ try:
     if image_data:
         image_base64 = image_data[0]
 
+        # Resize image to 400x480 with transparent border
+        resized_image_base64 = resize_image_with_border(image_base64)
+
         # new: generate timestamped filename
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         filename = f"{timestamp}.png"
 
         # write the new image file
         with open(filename, "wb") as f:
-            f.write(base64.b64decode(image_base64))
+            f.write(base64.b64decode(resized_image_base64))
 
         # update the symlink current.png -> timestamped file
         try:
