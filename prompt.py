@@ -123,7 +123,7 @@ try:
                 "type": "image_generation",
                 "size": "1024x1024",
                 "background": "transparent",
-                "quality": "high",
+                "quality": "medium",
             }
         ],
     )
