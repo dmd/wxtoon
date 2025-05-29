@@ -1,3 +1,4 @@
 last_animal.txt
 owm-api-key
 *.png
+__pycache__/

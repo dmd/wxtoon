@@ -13,7 +13,7 @@ import io
 OWM_API = open("owm-api-key").read().strip()
 LAT = 42.41823
 LON = -71.186921
-SNAIL_CHANCE = 0.05
+SPECIAL_ANIMALS = {"snail": 0.04, "camel": 0.04}
 
 
 def get_season():
@@ -64,15 +64,22 @@ def resize_image_with_border(image_data, target_width=400, target_height=480):
 
 
 def pick_animal():
-    if random.random() < SNAIL_CHANCE:
-        return "snail"
-    else:
-        if not os.path.exists("last_animal.txt"):
-            open("last_animal.txt", "w").write("platypus")
-        last = open("last_animal.txt").read().strip()
-        animal = "capybara" if last == "platypus" else "platypus"
-        open("last_animal.txt", "w").write(animal)
-        return animal
+    rand = random.random()
+    cumulative_prob = 0
+
+    # Check special animals first
+    for animal, probability in SPECIAL_ANIMALS.items():
+        cumulative_prob += probability
+        if rand < cumulative_prob:
+            return animal
+
+    # Default to alternating platypus/capybara
+    if not os.path.exists("last_animal.txt"):
+        open("last_animal.txt", "w").write("platypus")
+    last = open("last_animal.txt").read().strip()
+    animal = "capybara" if last == "platypus" else "platypus"
+    open("last_animal.txt", "w").write(animal)
+    return animal
 
 
 animal = pick_animal()
