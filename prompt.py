@@ -85,10 +85,11 @@ def pick_animal():
 animal = pick_animal()
 season = get_season()
 
-url = f"http://api.openweathermap.org/data/2.5/weather?appid={OWM_API}&lat={LAT}&lon={LON}"
+url = f"https://api.openweathermap.org/data/3.0/onecall?lat={LAT}&lon={LON}&exclude=current,minutely,hourly,alerts&appid={OWM_API}"
+
 with urllib.request.urlopen(url) as resp:
     data = json.load(resp)
-weather = data["weather"][0]
+weather = data["daily"][0]["weather"][0]
 icon = weather.get("icon", "")
 weather_description = weather.get("description", "")
 
