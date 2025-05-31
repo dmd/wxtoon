@@ -11,8 +11,7 @@ import io
 
 
 OWM_API = open("owm-api-key").read().strip()
-LAT = 42.41823
-LON = -71.186921
+LAT, LON = open("location.txt").read().strip().split(",")
 SPECIAL_ANIMALS = {"snail": 0.04, "camel": 0.04}
 
 
