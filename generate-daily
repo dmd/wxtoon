@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export OPENAI_API_KEY=$(cat ~/.openai-api-key)
+export OPENAI_API_KEY=$(cat ~/.apikeys/OPENAI_API_KEY)
 ~/wxtoon/.venv/bin/python prompt.py
