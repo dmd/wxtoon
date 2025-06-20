@@ -12,7 +12,7 @@ import io
 
 OWM_API = open("owm-api-key").read().strip()
 LAT, LON = open("location.txt").read().strip().split(",")
-SPECIAL_ANIMALS = {"snail": 0.04, "camel": 0.04}
+SPECIAL_ANIMALS = {"snail": 0.03, "camel": 0.03, "octopus": 0.02, "cat": 0.01}
 
 
 def get_season():
