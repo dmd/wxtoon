@@ -150,10 +150,15 @@ try:
         # new: generate timestamped filename
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         filename = f"{timestamp}.png"
+        prompt_filename = f"{timestamp}.txt"
 
         # write the new image file
         with open(filename, "wb") as f:
             f.write(base64.b64decode(resized_image_base64))
+
+        # write the prompt to text file
+        with open(prompt_filename, "w") as f:
+            f.write(prompt)
 
         # update the symlink current.png -> timestamped file
         try:
@@ -169,4 +174,4 @@ except Exception as e:
     image_url = None
 
 print(prompt)
-print(f"Wrote {filename}.")
+print(f"Wrote {filename} and {prompt_filename}.")
