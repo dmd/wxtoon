@@ -3,3 +3,4 @@ owm-api-key
 *.png
 __pycache__/
 location.txt
+2*txt
