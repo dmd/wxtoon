@@ -6,6 +6,7 @@
 #     "pillow",
 # ]
 # ///
+import argparse
 import random
 import os
 import json
@@ -69,7 +70,7 @@ def resize_image_with_border(image_data, target_width=400, target_height=480):
     return base64.b64encode(buffer.getvalue()).decode()
 
 
-def pick_animal():
+def pick_animal(update_last=True):
     rand = random.random()
     cumulative_prob = 0
 
@@ -84,11 +85,20 @@ def pick_animal():
         open("last_animal.txt", "w").write("platypus")
     last = open("last_animal.txt").read().strip()
     animal = "capybara" if last == "platypus" else "platypus"
-    open("last_animal.txt", "w").write(animal)
+    if update_last:
+        open("last_animal.txt", "w").write(animal)
     return animal
 
 
-animal = pick_animal()
+parser = argparse.ArgumentParser(description="Generate cartoon animal images")
+parser.add_argument("--animal", type=str, help="Specify the animal to use")
+parser.add_argument("--activity", type=str, help="Specify the activity to use")
+args = parser.parse_args()
+
+if args.animal:
+    animal = args.animal
+else:
+    animal = pick_animal()
 season = get_season()
 
 url = f"https://api.openweathermap.org/data/3.0/onecall?lat={LAT}&lon={LON}&exclude=current,minutely,hourly,alerts&appid={OWM_API}"
@@ -108,11 +118,14 @@ with open("activities.tsv") as f:
         ic, desc, se, act = parts
         if ic == icon and se == season:
             matched_activities.append(act)
-if not matched_activities:
-    raise RuntimeError(
-        f"No activities found for icon {icon} and description {weather_description}"
-    )
-activity = random.choice(matched_activities)
+if args.activity:
+    activity = args.activity
+else:
+    if not matched_activities:
+        raise RuntimeError(
+            f"No activities found for icon {icon} and description {weather_description}"
+        )
+    activity = random.choice(matched_activities)
 
 if "__ANIMAL__" in activity:
     activity = activity.replace("__ANIMAL__", animal)
