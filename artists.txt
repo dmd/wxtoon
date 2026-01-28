@@ -1,30 +1,50 @@
-Arthur Rackham
-Beatrix Potter
-Chris Van Allsburg
-Christian Robinson
-Dan Santat
-David Wiesner
-Dr. Seuss (Theodor Geisel)
-E.H. Shepard
-Eric Carle
-Ezra Jack Keats
-Garth Williams
-Jerry Pinkney
-John Tenniel
-Johnny Gruelle
-Jon Klassen
-Kadir Nelson
-Kate Greenaway
-Lane Smith
-Leo Lionni
-Ludwig Bemelmans
-Maurice Sendak
-Mo Willems
-Oliver Jeffers
-Quentin Blake
-Richard Scarry
-Robert McCloskey
-Shel Silverstein
-Sophie Blackall
-Tove Jansson
-W.W. Denslow
+Leonardo da Vinci
+Michelangelo
+Raphael
+Sandro Botticelli
+Titian
+Caravaggio
+Rembrandt
+Johannes Vermeer
+Peter Paul Rubens
+Diego Velázquez
+Francisco Goya
+J. M. W. Turner
+Claude Monet
+Edgar Degas
+Pierre-Auguste Renoir
+Paul Cézanne
+Vincent van Gogh
+Paul Gauguin
+Georges Seurat
+Henri de Toulouse-Lautrec
+Gustav Klimt
+Egon Schiele
+Edvard Munch
+Wassily Kandinsky
+Pablo Picasso
+Georges Braque
+Henri Matisse
+Joan Miró
+Salvador Dalí
+René Magritte
+Marc Chagall
+Frida Kahlo
+Diego Rivera
+Georgia O’Keeffe
+Edward Hopper
+Jackson Pollock
+Willem de Kooning
+Mark Rothko
+Andy Warhol
+Roy Lichtenstein
+Jean-Michel Basquiat
+Yayoi Kusama
+David Hockney
+Francis Bacon
+Lucian Freud
+Albrecht Dürer
+Katsushika Hokusai
+Utagawa Hiroshige
+Mary Cassatt
+Norman Rockwell
