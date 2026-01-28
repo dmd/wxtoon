@@ -1,4 +1,6 @@
 #!/bin/bash
 
 export OPENAI_API_KEY=$(cat ~/.apikeys/OPENAI_API_KEY)
-/home/dmd/.local/bin/uv run ~/wxtoon/prompt.py
+export GEMINI_API_KEY=$(cat ~/.apikeys/GEMINI_API_KEY)
+
+/home/dmd/.local/bin/uv run ~/wxtoon/prompt_illus.py
