@@ -15,7 +15,7 @@ import json
 import urllib.request
 from datetime import datetime
 from typing import Optional
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from google import genai
 from google.genai import types
 
@@ -167,6 +167,17 @@ try:
         raise RuntimeError("No image data found in Gemini response.")
 
     resized = image.resize((400, 400), Image.Resampling.LANCZOS)
+
+    # Add artist name at bottom right
+    draw = ImageDraw.Draw(resized)
+    artist_text = f'"{artist}"'
+    font = ImageFont.truetype("Helvetica.ttc", 12)
+    bbox = draw.textbbox((0, 0), artist_text, font=font)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+    x = 400 - text_width - 5
+    y = 400 - text_height - 5
+    draw.text((x, y), artist_text, fill="black", font=font)
 
     # new: generate timestamped filename
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
