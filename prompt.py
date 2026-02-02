@@ -178,6 +178,9 @@ try:
             if os.path.islink("current.png") or os.path.exists("current.png"):
                 os.remove("current.png")
             os.symlink(filename, "current.png")
+            if os.path.islink("current.txt") or os.path.exists("current.txt"):
+                os.remove("current.txt")
+            os.symlink(prompt_filename, "current.txt")
         except OSError as link_err:
             print(f"Warning: could not update symlink: {link_err}")
 
