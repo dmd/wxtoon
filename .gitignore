@@ -4,3 +4,4 @@ owm-api-key
 __pycache__/
 location.txt
 2*txt
+current.txt
