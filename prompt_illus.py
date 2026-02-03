@@ -173,9 +173,12 @@ try:
     artist_text = f'"{artist}"'
     font = ImageFont.truetype("Helvetica.ttc", 12)
     bbox = draw.textbbox((0, 0), artist_text, font=font)
+    text_width = bbox[2] - bbox[0]
     text_height = bbox[3] - bbox[1]
-    x = 15
-    y = 400 - text_height - 5
+    x = 15 - bbox[0]
+    y = 400 - text_height - 5 - bbox[1]
+    if x + text_width > 400:
+        x = 400 - text_width - 5 - bbox[0]
     draw.text((x, y), artist_text, fill="black", font=font)
 
     # new: generate timestamped filename
