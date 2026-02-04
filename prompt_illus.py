@@ -126,8 +126,7 @@ else:
 if "__ANIMAL__" in activity:
     activity = activity.replace("__ANIMAL__", animal)
 
-style_clause = f", drawn in the style of {artist}"
-prompt = f"""A black-and-white image of a cute {animal}{style_clause}, centered in a square 400x400 scene. The {animal} is {activity}, matching the current weather which is {weather_description} and the current season which is {season}. The image should extend to the edge and not have any border."""
+prompt = f"""A black-and-white image of a cute {animal}, drawn in the style of {artist}, centered in a square 400x400 scene. The {animal} is {activity}, matching the current weather which is {weather_description} and the current season which is {season}. The image should extend to the edge and not have any border."""
 
 api_key = os.environ.get("GEMINI_API_KEY")
 if not api_key:
